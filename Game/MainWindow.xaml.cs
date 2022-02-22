@@ -22,6 +22,15 @@ namespace Game
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Resources
+
+        private Type[] theResults;
+
+        private bool p1Turn;
+
+        private bool endedGame;
+
+        #endregion
 
         #region Constructor
         public MainWindow()
