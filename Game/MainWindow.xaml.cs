@@ -63,6 +63,64 @@ namespace Game
 
         }
 
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (endedGame)
+            {
+                newGame();
+                return;
+            }
+
+            var btn = (Button)sender;
+
+            var row = Grid.GetRow(btn);
+            var column = Grid.GetColumn(btn);
+
+            var index = column + (row * 3);
+
+            if (theResults[index] != Type.Free)
+            {
+                return;
+            }
+
+            if (p1Turn)
+            {
+                theResults[index] = Type.Cross;
+            }
+            else
+            {
+                theResults[index] = Type.Zero;
+            }
+
+            if (p1Turn)
+            {
+                btn.Content = "X";
+            }
+            else
+            {
+                btn.Content = "O";
+            }
+
+            if (p1Turn)
+            {
+                p1Turn = false;
+            }
+            else
+            {
+                p1Turn = true;
+            }
+
+            if (!p1Turn)
+            {
+                btn.Foreground = Brushes.BlueViolet;
+            }
+            else
+            {
+                btn.Foreground = Brushes.Cyan;
+            }
+
+        }
+
 
     }
 }
