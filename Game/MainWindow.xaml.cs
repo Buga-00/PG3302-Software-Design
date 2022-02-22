@@ -37,10 +37,32 @@ namespace Game
         {
             InitializeComponent();
 
+            newGame();
         }
 
         #endregion
 
-       
+        private void newGame()
+        {
+            theResults = new Type[9];
+
+            for (var i = 0; i < theResults.Length; i++)
+            {
+                theResults[i] = Type.Free;
+            }
+
+            p1Turn = true;
+
+            GridUI.Children.Cast<Button>().ToList().ForEach(btn =>
+            {
+                btn.Content = string.Empty;
+                btn.Background = Brushes.White;
+            });
+
+            endedGame = false;
+
+        }
+
+
     }
 }
