@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Game"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Tic Tac Toe" Height="500" Width="500">
+        Title="Tic Tac Toe" Height="600" Width="600">
     <Grid x:Name="GridUI">
 
         <Grid.RowDefinitions>
