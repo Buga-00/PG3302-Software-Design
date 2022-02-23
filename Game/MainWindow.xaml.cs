@@ -22,16 +22,7 @@ namespace Game
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Resources
-
-        private Type[] theResults;
-
-        private bool p1Turn;
-
-        private bool endedGame;
-
-        #endregion
-
+        
         #region Constructor
         public MainWindow()
         {
@@ -42,17 +33,30 @@ namespace Game
 
         #endregion
 
+        #region Resources
+
+        private Type[] theResults;
+
+        private bool p1Turn;
+
+        private bool endedGame;
+
+        #endregion
+
+        #region New game
+
         private void newGame()
         {
             theResults = new Type[9];
+
+            p1Turn = true;
 
             for (var i = 0; i < theResults.Length; i++)
             {
                 theResults[i] = Type.Free;
             }
 
-            p1Turn = true;
-
+            //When a new game starts the board is empty and the background turns white
             GridUI.Children.Cast<Button>().ToList().ForEach(btn =>
             {
                 btn.Content = string.Empty;
@@ -63,6 +67,11 @@ namespace Game
 
         }
 
+        #endregion
+
+        #region Button
+
+        //Button with event to get it to work
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             if (endedGame)
@@ -72,10 +81,8 @@ namespace Game
             }
 
             var btn = (Button)sender;
-
             var row = Grid.GetRow(btn);
             var column = Grid.GetColumn(btn);
-
             var index = column + (row * 3);
 
             if (theResults[index] != Type.Free)
@@ -122,6 +129,9 @@ namespace Game
             WinCheck();
         }
 
+        #endregion
+
+        #region Checking for winner
         private void WinCheck()
         {
 
@@ -150,6 +160,26 @@ namespace Game
                 endedGame = true;
 
                 Btn0_2.Background = Btn1_2.Background = Btn2_2.Background = Brushes.Pink;
+            }
+
+            #endregion
+
+            #region cross wins
+
+            //Top right to bottom left
+            if ((theResults[2] & theResults[4] & theResults[6]) == theResults[2] && theResults[2] != Type.Free)
+            {
+                endedGame = true;
+
+                Btn2_0.Background = Btn1_1.Background = Btn0_2.Background = Brushes.Pink;
+            }
+
+            //Top left to bottom right
+            if ((theResults[0] & theResults[4] & theResults[8]) == theResults[0] && theResults[0] != Type.Free)
+            {
+                endedGame = true;
+
+                Btn0_0.Background = Btn1_1.Background = Btn2_2.Background = Brushes.Pink;
             }
 
             #endregion
@@ -183,28 +213,9 @@ namespace Game
 
             #endregion
 
-            #region cross wins
-
-            //Top right to bottom left
-            if ((theResults[2] & theResults[4] & theResults[6]) == theResults[2] && theResults[2] != Type.Free)
-            {
-                endedGame = true;
-
-                Btn2_0.Background = Btn1_1.Background = Btn0_2.Background = Brushes.Pink;
-            }
-
-            //Top left to bottom right
-            if ((theResults[0] & theResults[4] & theResults[8]) == theResults[0] && theResults[0] != Type.Free)
-            {
-                endedGame = true;
-
-                Btn0_0.Background = Btn1_1.Background = Btn2_2.Background = Brushes.Pink;
-            }
-
-            #endregion
-
             #region No one wins
 
+            //If no one wins the background will turn gold
             if (!theResults.Any(r => r == Type.Free))
             {
                 endedGame = true;
@@ -217,7 +228,7 @@ namespace Game
 
             #endregion
 
-
         }
+        #endregion
     }
 }
